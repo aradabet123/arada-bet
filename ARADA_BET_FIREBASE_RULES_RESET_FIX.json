@@ -1,0 +1,51 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "records": {
+      "aradaBet": {
+        ".read": true,
+        ".write": "auth != null && auth.token.email === 'gezuman90@gmail.com'"
+      }
+    },
+    "publicData": {
+      "aradaBet": {
+        "ownerContact": {
+          ".read": true,
+          ".write": "auth != null && auth.token.email === 'gezuman90@gmail.com'"
+        }
+      }
+    },
+    "ownerData": {
+      "aradaBet": {
+        ".read": "auth != null && auth.token.email === 'gezuman90@gmail.com'",
+        ".write": "auth != null && auth.token.email === 'gezuman90@gmail.com'"
+      }
+    },
+    "betRequests": {
+      ".read": "auth != null && auth.token.email === 'gezuman90@gmail.com'",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$requestId": {
+          ".write": "auth != null && ((auth.uid === $uid && !data.exists() && auth.token.firebase.sign_in_provider === 'google.com' && newData.child('uid').val() === auth.uid && newData.child('id').val() === $requestId && newData.child('status').val() === 'pending' && newData.child('customerName').isString() && newData.child('transactionId').isString() && newData.child('stake').isNumber() && newData.child('stake').val() >= 10 && newData.child('selections').hasChildren()) || (auth.token.email === 'gezuman90@gmail.com' && data.exists() && newData.exists() && newData.child('uid').val() === $uid && newData.child('id').val() === data.child('id').val() && (newData.child('status').val() === 'pending' || newData.child('status').val() === 'accepted' || newData.child('status').val() === 'rejected')) || (auth.token.email === 'gezuman90@gmail.com' && data.exists() && !newData.exists()))"
+        }
+      }
+    },
+    "cashoutRequests": {
+      ".read": "auth != null && auth.token.email === 'gezuman90@gmail.com'",
+      "$uid": {
+        ".read": "auth != null && auth.uid === $uid",
+        "$requestId": {
+          ".write": "auth != null && ((auth.uid === $uid && !data.exists() && newData.child('uid').val() === auth.uid && newData.child('id').val() === $requestId && newData.child('ticketId').isString() && newData.child('createdAt').isNumber()) || (auth.token.email === 'gezuman90@gmail.com' && data.exists() && !newData.exists()))"
+        }
+      }
+    },
+    "freeBetAccounts": {
+      ".read": "auth != null && auth.token.email === 'gezuman90@gmail.com'",
+      "$uid": {
+        ".read": "auth != null && (auth.uid === $uid || auth.token.email === 'gezuman90@gmail.com')",
+        ".write": "auth != null && auth.token.email === 'gezuman90@gmail.com'"
+      }
+    }
+  }
+}
